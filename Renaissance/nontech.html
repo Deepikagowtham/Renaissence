@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
+    <style>
+        @import url("https://fonts.googleapis.com/css?family=Montserrat:600");
+        @import url("https://fonts.googleapis.com/css?family=Montserrat:800");
+        @import url("https://fonts.googleapis.com/css?family=Montserrat");
+
+        body {
+            font-family: "Montserrat", sans-serif;
+            background: linear-gradient(270deg, #ff0266, #f9a01b);
+            background-size: 150% 150%;
+            animation: backgroundAnimation 10s ease infinite;
+            display: flex;
+            flex-direction: column; /* Stack sections vertically */
+            justify-content: flex-start;
+            align-items: center;
+            width: 100vw;
+            height: auto; /* Allow scrolling */
+            margin: 0;
+            padding-bottom: 50px; /* Add space at the bottom */
+        }
+
+        .profile {
+            animation: loadProfile 0.6s ease-in-out;
+            animation-fill-mode: both;
+            font-size: 0.9rem;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            max-width: 900px;
+            margin-bottom: 50px; /* Add space between sections */
+        }
+
+        .profile-bg {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            border-radius: 10px;
+            background: #fbfaf8;
+            box-shadow: 0 30px 50px -20px rgba(14, 0, 47, 0.21);
+            width: calc(100% - 75px);
+            height: calc(100% - 110px);
+            z-index: -1;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: row;
+            align-items: stretch;
+            width: 100%;
+        } 
+
+        .profile-image {
+            position: relative;
+            border-radius: 10px;
+            box-shadow: 0 25px 45px -20px rgba(255, 0, 47, 0.55),
+                inset 0 0px 120px rgba(255, 0, 47, 0.75);
+            width: 45%;
+            flex: none;
+            background-size: cover;
+            background-position: center;
+            z-index: 1;
+        }
+
+        .profile-image img {
+            width: 90%;
+            height: 90%;
+            border-radius: 10px;
+            object-fit: cover;
+            margin-top: 25px;
+            margin-left: 22px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .profile-image::before {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 10px;
+            background-color: #ff0266;
+            opacity: 0.8;
+            mix-blend-mode: screen;
+        }
+
+        .profile-info {
+            margin-top: 120px;
+            padding: 8% 8% 2% 8%;
+            position: relative;
+        }
+
+        .profile-info h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin: -0.7rem;
+            margin-left: 5.5rem;
+            position: absolute;
+            animation-fill-mode: both;
+        }
+
+        h1.first-name {
+            animation: titleEffect 1s cubic-bezier(0,0.2,0.4,1);
+            top: -115px;
+            left: -85px;
+            color: #ffffff;
+            z-index: 3; 
+        }
+
+        h1.second-name {
+            animation: titleEffect 1s cubic-bezier(0,0,0.3,1);
+            top: -50px;
+            left: -45px;
+            color: #ffffff;
+            z-index: 3; 
+        }
+
+        .profile-info h2 {
+            font-size: 1rem;
+            font-weight: 600;
+            letter-spacing: 0.2rem;
+            margin-top: 0;
+            margin-bottom: 5%;
+            color: #ff0266;
+        }
+
+        .profile-info p {
+            line-height: 1.5rem;
+        }
+
+        .custom-btn {
+            width: 130px;
+            height: 40px;
+            color: #fff;
+            border-radius: 5px;
+            padding: 10px 25px;
+            font-family: 'Lato', sans-serif;
+            font-weight: 500;
+            background: transparent;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            display: inline-block;
+            box-shadow:inset 2px 2px 2px 0px rgba(255,255,255,.5),
+            7px 7px 20px 0px rgba(0,0,0,.1),
+            4px 4px 5px 0px rgba(0,0,0,.1);
+            outline: none;
+        }
+
+        .btn-9 {
+            border: none;
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+        .btn-9:after {
+            position: absolute;
+            content: " ";
+            z-index: -1;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #ff0266;
+            background-image: linear-gradient(315deg, #ff0266 10%, #f9a01b 74%);
+            transition: all 0.3s ease;
+        }
+        .btn-9:hover {
+            background: transparent;
+            box-shadow: 4px 4px 6px 0 rgba(255,255,255,.5),
+                        -4px -4px 6px 0 rgba(116, 125, 136, .2), 
+                        inset -4px -4px 6px 0 rgba(255,255,255,.5),
+                        inset 4px 4px 6px 0 rgba(116, 125, 136, .3);
+            color: #fff;
+        }
+        .btn-9:hover:after {
+            transform: scale(2) rotate(180deg);
+            box-shadow: 4px 4px 6px 0 rgba(255,255,255,.5),
+                        -4px -4px 6px 0 rgba(116, 125, 136, .2), 
+                        inset -4px -4px 6px 0 rgba(255,255,255,.5),
+                        inset 4px 4px 6px 0 rgba(116, 125, 136, .3);
+        }
+
+
+/* Media Queries for responsiveness */
+@media (max-width: 768px) {
+    .profile-info h1 {
+        font-size: 1.8rem;
+    }
+
+    .profile-info h2 {
+        font-size: 1rem;
+    }
+
+    .profile-info p {
+        font-size: 0.9rem;
+    }
+
+    .profile-image {
+        width: 100%; /* Full width for mobile */
+    }
+
+    .container {
+        flex-direction: column; /* Stack on mobile */
+        align-items: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .profile-info h1 {
+        font-size: 1.5rem;
+    }
+
+    .profile-info h2 {
+        font-size: 0.9rem;
+    }
+
+    .profile-info p {
+        font-size: 0.8rem;
+    }
+}
+
+        @keyframes backgroundAnimation {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        @keyframes loadProfile {
+            from {
+                transform: translateY(100px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0px);
+                opacity: 1;
+            }
+        }
+
+        @keyframes titleEffect {
+            from {
+                opacity:0;
+                transform: translateX(-75px);
+            }
+            to {
+                transform: translateX(0px);
+                opacity: 1;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <br><br>
+    <main class="profile">
+        <div class="profile-bg"></div>
+        <section class="container">
+            <aside class="profile-image">
+                <img src="C:\Users\deepi\OneDrive\Desktop\website\History\images\18-4.jpg" alt="Profile Image">
+            </aside>
+            <section class="profile-info">
+                <h1 class="first-name">Talent</h1>
+                <h1 class="second-name">Extravaganza</h1>
+                <h2>IDEA:</h2>
+                <p>Any topic on computer trends.<br></p>
+                <h2>GUIDELINES:</h2>
+                <p>* Max Members in team: 2<br>* Time for presentation: 5 mins (4+1)<br>
+                    Abstract Selection: 20 Papers from 2nd Year & 20 Papers from 3rd Year
+                </p>
+                <button class="custom-btn btn-9">Register</button>
+            </section>
+        </section>
+    </main>
+
+    <main class="profile">
+        <div class="profile-bg"></div>
+        <section class="container">
+            <aside class="profile-image">
+                <img src="C:\Users\deepi\OneDrive\Desktop\website\History\images\18-4.jpg" alt="Profile Image">
+            </aside>
+            <section class="profile-info">
+                <h1 class="first-name">Wonder</h1>
+                <h1 class="second-name">Crate</h1>
+                <h2>IDEA:</h2>
+                <p>Innovative Ideas in ML & IoT.<br></p>
+                <h2>GUIDELINES:</h2>
+                <p>* Max Members in team: 2<br>* Time for presentation: 10 mins<br>
+                    Selected Ideas will be guided for prototype development.
+                </p>
+                <button class="custom-btn btn-9">Register</button>
+            </section>
+        </section>
+    </main>
+    
+    <main class="profile">
+        <div class="profile-bg"></div>
+        <section class="container">
+            <aside class="profile-image">
+                <img src="C:\Users\deepi\OneDrive\Desktop\website\History\images\18-4.jpg" alt="Profile Image">
+            </aside>
+            <section class="profile-info">
+                <h1 class="first-name">Squid</h1>
+                <h1 class="second-name">Game</h1>
+                <h2>IDEA:</h2>
+                <p>Innovative Ideas in ML & IoT.<br></p>
+                <h2>GUIDELINES:</h2>
+                <p>* Max Members in team: 2<br>* Time for presentation: 10 mins<br>
+                    Selected Ideas will be guided for prototype development.
+                </p>
+                <button class="custom-btn btn-9">Register</button>
+            </section>
+        </section>
+    </main>
+    
+    <main class="profile">
+        <div class="profile-bg"></div>
+        <section class="container">
+            <aside class="profile-image">
+                <img src="C:\Users\deepi\OneDrive\Desktop\website\History\images\18-4.jpg" alt="Profile Image">
+            </aside>
+            <section class="profile-info">
+                <h1 class="first-name">Visual</h1>
+                <h1 class="second-name">Clip</h1>
+                <h2>IDEA:</h2>
+                <p>Innovative Ideas in ML & IoT.<br></p>
+                <h2>GUIDELINES:</h2>
+                <p>* Max Members in team: 2<br>* Time for presentation: 10 mins<br>
+                    Selected Ideas will be guided for prototype development.
+                </p>
+                <button class="custom-btn btn-9">Register</button>
+            </section>
+        </section>
+    </main>
+    
+    <main class="profile">
+        <div class="profile-bg"></div>
+        <section class="container">
+            <aside class="profile-image">
+                <img src="C:\Users\deepi\OneDrive\Desktop\website\History\images\18-4.jpg" alt="Profile Image">
+            </aside>
+            <section class="profile-info">
+                <h1 class="first-name">Quest For</h1>
+                <h1 class="second-name">Riches</h1>
+                <h2>IDEA:</h2>
+                <p>Innovative Ideas in ML & IoT.<br></p>
+                <h2>GUIDELINES:</h2>
+                <p>* Max Members in team: 2<br>* Time for presentation: 10 mins<br>
+                    Selected Ideas will be guided for prototype development.
+                </p>
+                <button class="custom-btn btn-9">Register</button>
+            </section>
+        </section>
+    </main>
+
+    
+</body>
+</html>
